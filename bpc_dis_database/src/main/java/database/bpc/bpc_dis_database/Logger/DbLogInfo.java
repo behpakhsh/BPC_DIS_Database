@@ -2,14 +2,17 @@ package database.bpc.bpc_dis_database.Logger;
 
 import androidx.annotation.NonNull;
 
+import java.util.Date;
+
 public class DbLogInfo {
 
     private String tableName;
-    private String result;
-    private String userQuery;
-    private String query;
     private QueryType queryType;
+    private String query;
+    private String userQuery;
     private ResultType resultType;
+    private Date date = new Date();
+    private String result;
 
     public String getTableName() {
         return tableName;
@@ -51,6 +54,14 @@ public class DbLogInfo {
         this.queryType = queryType;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public ResultType getResultType() {
         return resultType;
     }
@@ -64,11 +75,12 @@ public class DbLogInfo {
     public String toString() {
         return "{" +
                 "tableName='" + tableName + '\'' +
-                ", result='" + result + '\'' +
-                ", userQuery='" + userQuery + '\'' +
-                ", query='" + query + '\'' +
                 ", queryType=" + queryType +
+                ", query='" + query + '\'' +
+                ", userQuery='" + userQuery + '\'' +
                 ", resultType=" + resultType +
+                ", date=" + date +
+                ", result='" + result + '\'' +
                 '}';
     }
 

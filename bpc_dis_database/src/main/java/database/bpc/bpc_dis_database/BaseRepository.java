@@ -199,7 +199,7 @@ public abstract class BaseRepository<T> {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        logDeleteQuery(simpleSQLiteQuery.toString(), "", QueryType.DELETE_ALL, i);
+        logDeleteQuery(simpleSQLiteQuery.getSql(), "", QueryType.DELETE_ALL, i);
     }
 
     public void deleteByCondition(String condition) {
@@ -211,13 +211,12 @@ public abstract class BaseRepository<T> {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            logDeleteQuery(simpleSQLiteQuery.toString(), condition, QueryType.DELETE_BY_CONDITION, i);
+            logDeleteQuery(simpleSQLiteQuery.getSql(), condition, QueryType.DELETE_BY_CONDITION, i);
         }
     }
 
     private void logDeleteQuery(String query, String userQuery, QueryType queryType, int result) {
         DbLogInfo dbLogInfo = new DbLogInfo();
-        dbLogInfo.setTableName(getTableName());
         dbLogInfo.setTableName(getTableName());
         dbLogInfo.setQuery(query);
         dbLogInfo.setUserQuery(userQuery);
@@ -249,7 +248,7 @@ public abstract class BaseRepository<T> {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        logGetQuery(simpleSQLiteQuery.toString(), String.valueOf(id), t);
+        logGetQuery(simpleSQLiteQuery.getSql(), String.valueOf(id), t);
         return t;
     }
 
@@ -261,7 +260,7 @@ public abstract class BaseRepository<T> {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        logGetQuery(simpleSQLiteQuery.toString(), "", QueryType.SELECT_ALL, ts);
+        logGetQuery(simpleSQLiteQuery.getSql(), "", QueryType.SELECT_ALL, ts);
         return ts;
     }
 
@@ -273,7 +272,7 @@ public abstract class BaseRepository<T> {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        logGetQuery(simpleSQLiteQuery.toString(), query, QueryType.SELECT_BY_QUERY, ts);
+        logGetQuery(simpleSQLiteQuery.getSql(), query, QueryType.SELECT_BY_QUERY, ts);
         return ts;
     }
 
@@ -285,7 +284,7 @@ public abstract class BaseRepository<T> {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        logGetQuery(simpleSQLiteQuery.toString(), condition, QueryType.SELECT_BY_CONDITION, ts);
+        logGetQuery(simpleSQLiteQuery.getSql(), condition, QueryType.SELECT_BY_CONDITION, ts);
         return ts;
     }
 
