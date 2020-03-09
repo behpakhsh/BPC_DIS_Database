@@ -1,0 +1,7 @@
+package database.bpc.bpc_dis_database.Logger;
+
+public enum QueryType {
+
+    DELETE, DELETE_BY_CONDITION, DELETE_ALL, INSERT, INSERT_LIST, SELECT_ALL, SELECT_BY_CONDITION, SELECT_BY_QUERY, SELECT_BY_ID, UPDATE_LIST, UPDATE
+
+}
