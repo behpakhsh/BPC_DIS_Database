@@ -10,9 +10,9 @@ import androidx.sqlite.db.SupportSQLiteQuery;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
-import database.bpc.bpc_dis_database.Logger.DbLogInfo;
 import database.bpc.bpc_dis_database.Logger.DbLoggerListener;
 import database.bpc.bpc_dis_database.Logger.QueryType;
 import database.bpc.bpc_dis_database.Logger.ResultType;
@@ -68,40 +68,28 @@ public abstract class BaseRepository<T> {
     }
 
     private void logUpdateQuery(String userQuery, long result) {
-        DbLogInfo dbLogInfo = new DbLogInfo();
-        dbLogInfo.setTableName(getTableName());
-        dbLogInfo.setQuery("");
-        dbLogInfo.setUserQuery(userQuery);
-        dbLogInfo.setQueryType(QueryType.UPDATE);
-        dbLogInfo.setResult(String.valueOf(result));
+        ResultType resultType;
         if (result != -1) {
-            dbLogInfo.setResultType(ResultType.OK);
+            resultType = ResultType.OK;
         } else {
-            dbLogInfo.setResultType(ResultType.NOT_OK);
+            resultType = ResultType.NOT_OK;
         }
         if (dbLoggerListener != null) {
-            dbLoggerListener.onLog(dbLogInfo);
+            dbLoggerListener.onLog(new Date(), getTableName(), QueryType.UPDATE, "", userQuery, resultType, String.valueOf(result));
         }
     }
 
     private void logUpdateQuery(String userQuery, long[] result) {
-        DbLogInfo dbLogInfo = new DbLogInfo();
-        dbLogInfo.setTableName(getTableName());
-        dbLogInfo.setQuery("");
-        dbLogInfo.setUserQuery(userQuery);
-        dbLogInfo.setQueryType(QueryType.UPDATE_LIST);
+        ResultType resultType;
         if (result == null) {
-            dbLogInfo.setResult("");
-            dbLogInfo.setResultType(ResultType.NULL);
+            resultType = ResultType.NULL;
         } else if (result.length == 0) {
-            dbLogInfo.setResult("");
-            dbLogInfo.setResultType(ResultType.EMPTY);
+            resultType = ResultType.EMPTY;
         } else {
-            dbLogInfo.setResult(Arrays.toString(result));
-            dbLogInfo.setResultType(ResultType.OK);
+            resultType = ResultType.OK;
         }
         if (dbLoggerListener != null) {
-            dbLoggerListener.onLog(dbLogInfo);
+            dbLoggerListener.onLog(new Date(), getTableName(), QueryType.UPDATE_LIST, "", userQuery, resultType, Arrays.toString(result));
         }
     }
 
@@ -136,40 +124,32 @@ public abstract class BaseRepository<T> {
     }
 
     private void logInsertQuery(String userQuery, long result) {
-        DbLogInfo dbLogInfo = new DbLogInfo();
-        dbLogInfo.setTableName(getTableName());
-        dbLogInfo.setQuery("");
-        dbLogInfo.setUserQuery(userQuery);
-        dbLogInfo.setQueryType(QueryType.INSERT_LIST);
-        dbLogInfo.setResult(String.valueOf(result));
+        ResultType resultType;
         if (result != -1) {
-            dbLogInfo.setResultType(ResultType.OK);
+            resultType = ResultType.OK;
         } else {
-            dbLogInfo.setResultType(ResultType.NOT_OK);
+            resultType = ResultType.NOT_OK;
         }
         if (dbLoggerListener != null) {
-            dbLoggerListener.onLog(dbLogInfo);
+            dbLoggerListener.onLog(new Date(), getTableName(), QueryType.INSERT_LIST, "", userQuery, resultType, String.valueOf(result));
         }
     }
 
     private void logInsertQuery(String userQuery, long[] result) {
-        DbLogInfo dbLogInfo = new DbLogInfo();
-        dbLogInfo.setTableName(getTableName());
-        dbLogInfo.setQuery("");
-        dbLogInfo.setUserQuery(userQuery);
-        dbLogInfo.setQueryType(QueryType.INSERT);
+        ResultType resultType;
+        String resultString;
         if (result == null) {
-            dbLogInfo.setResult("");
-            dbLogInfo.setResultType(ResultType.NULL);
+            resultType = ResultType.NULL;
+            resultString = "";
         } else if (result.length == 0) {
-            dbLogInfo.setResult("");
-            dbLogInfo.setResultType(ResultType.EMPTY);
+            resultType = ResultType.EMPTY;
+            resultString = "";
         } else {
-            dbLogInfo.setResult(Arrays.toString(result));
-            dbLogInfo.setResultType(ResultType.OK);
+            resultType = ResultType.OK;
+            resultString = Arrays.toString(result);
         }
         if (dbLoggerListener != null) {
-            dbLoggerListener.onLog(dbLogInfo);
+            dbLoggerListener.onLog(new Date(), getTableName(), QueryType.INSERT, "", userQuery, resultType, resultString);
         }
     }
 
@@ -216,19 +196,14 @@ public abstract class BaseRepository<T> {
     }
 
     private void logDeleteQuery(String query, String userQuery, QueryType queryType, int result) {
-        DbLogInfo dbLogInfo = new DbLogInfo();
-        dbLogInfo.setTableName(getTableName());
-        dbLogInfo.setQuery(query);
-        dbLogInfo.setUserQuery(userQuery);
-        dbLogInfo.setQueryType(queryType);
-        dbLogInfo.setResult(String.valueOf(result));
+        ResultType resultType;
         if (result != -1) {
-            dbLogInfo.setResultType(ResultType.OK);
+            resultType = ResultType.OK;
         } else {
-            dbLogInfo.setResultType(ResultType.NOT_OK);
+            resultType = ResultType.NOT_OK;
         }
         if (dbLoggerListener != null) {
-            dbLoggerListener.onLog(dbLogInfo);
+            dbLoggerListener.onLog(new Date(), getTableName(), queryType, query, userQuery, resultType, String.valueOf(result));
         }
     }
 
@@ -289,41 +264,35 @@ public abstract class BaseRepository<T> {
     }
 
     private void logGetQuery(String query, String userQuery, QueryType queryType, List<T> result) {
-        DbLogInfo dbLogInfo = new DbLogInfo();
-        dbLogInfo.setTableName(getTableName());
-        dbLogInfo.setQuery(query);
-        dbLogInfo.setUserQuery(userQuery);
-        dbLogInfo.setQueryType(queryType);
+        ResultType resultType;
+        String resultString = "";
         if (result == null) {
-            dbLogInfo.setResult("");
-            dbLogInfo.setResultType(ResultType.NULL);
+            resultType = ResultType.NULL;
+            resultString = "";
         } else if (result.isEmpty()) {
-            dbLogInfo.setResult("");
-            dbLogInfo.setResultType(ResultType.EMPTY);
+            resultType = ResultType.EMPTY;
+            resultString = "";
         } else {
-            dbLogInfo.setResult(result.toString());
-            dbLogInfo.setResultType(ResultType.OK);
+            resultType = ResultType.OK;
+            resultString = result.toString();
         }
         if (dbLoggerListener != null) {
-            dbLoggerListener.onLog(dbLogInfo);
+            dbLoggerListener.onLog(new Date(), getTableName(), queryType, query, userQuery, resultType, resultString);
         }
     }
 
     private void logGetQuery(String query, String userQuery, T result) {
-        DbLogInfo dbLogInfo = new DbLogInfo();
-        dbLogInfo.setTableName(getTableName());
-        dbLogInfo.setQuery(query);
-        dbLogInfo.setUserQuery(userQuery);
-        dbLogInfo.setQueryType(QueryType.SELECT_BY_ID);
+        ResultType resultType;
+        String resultString;
         if (result == null) {
-            dbLogInfo.setResult("");
-            dbLogInfo.setResultType(ResultType.NULL);
+            resultType = ResultType.NULL;
+            resultString = "";
         } else {
-            dbLogInfo.setResult(result.toString());
-            dbLogInfo.setResultType(ResultType.OK);
+            resultType = ResultType.OK;
+            resultString = result.toString();
         }
         if (dbLoggerListener != null) {
-            dbLoggerListener.onLog(dbLogInfo);
+            dbLoggerListener.onLog(new Date(), getTableName(), QueryType.SELECT_BY_ID, query, userQuery, resultType, resultString);
         }
     }
 
