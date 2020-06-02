@@ -265,7 +265,7 @@ public abstract class BaseRepository<T> {
 
     private void logGetQuery(String query, String userQuery, QueryType queryType, List<T> result) {
         ResultType resultType;
-        String resultString = "";
+        String resultString;
         if (result == null) {
             resultType = ResultType.NULL;
             resultString = "";
@@ -295,5 +295,10 @@ public abstract class BaseRepository<T> {
             dbLoggerListener.onLog(new Date(), getTableName(), QueryType.SELECT_BY_ID, query, userQuery, resultType, resultString);
         }
     }
+
+    ////////////////////////////////////////////////////////
+
+    @RawQuery
+    protected abstract void runQuery(SupportSQLiteQuery supportSQLiteQuery);
 
 }
