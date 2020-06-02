@@ -304,13 +304,12 @@ public abstract class BaseRepository<T> {
     public void runQuery(String query) {
         if (query != null && !query.trim().isEmpty()) {
             SimpleSQLiteQuery simpleSQLiteQuery = new SimpleSQLiteQuery(query);
-            int i = -1;
             try {
-                i = dbDelete(simpleSQLiteQuery);
+                runQuery(simpleSQLiteQuery);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            logDeleteQuery(simpleSQLiteQuery.getSql(), query, QueryType.QUERY, i);
+            logDeleteQuery(simpleSQLiteQuery.getSql(), query, QueryType.QUERY, 0);
         }
     }
 
