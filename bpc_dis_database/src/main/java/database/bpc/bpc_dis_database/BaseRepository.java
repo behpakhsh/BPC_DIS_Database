@@ -299,6 +299,6 @@ public abstract class BaseRepository<T> {
     ////////////////////////////////////////////////////////
 
     @RawQuery
-    protected abstract void runQuery(SupportSQLiteQuery supportSQLiteQuery);
+    public abstract void runQuery(SupportSQLiteQuery supportSQLiteQuery);
 
 }
