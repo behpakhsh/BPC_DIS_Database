@@ -299,7 +299,7 @@ public abstract class BaseRepository<T> {
     ////////////////////////////////////////////////////////
 
     @RawQuery
-    protected abstract void runQuery(SupportSQLiteQuery supportSQLiteQuery);
+    protected abstract int runQuery(SupportSQLiteQuery supportSQLiteQuery);
 
     public void runQuery(String query) {
         if (query != null && !query.trim().isEmpty()) {
