@@ -299,6 +299,19 @@ public abstract class BaseRepository<T> {
     ////////////////////////////////////////////////////////
 
     @RawQuery
-    public abstract void runQuery(SupportSQLiteQuery supportSQLiteQuery);
+    protected abstract void runQuery(SupportSQLiteQuery supportSQLiteQuery);
+
+    public void runQuery(String query) {
+        if (query != null && !query.trim().isEmpty()) {
+            SimpleSQLiteQuery simpleSQLiteQuery = new SimpleSQLiteQuery(query);
+            int i = -1;
+            try {
+                i = dbDelete(simpleSQLiteQuery);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            logDeleteQuery(simpleSQLiteQuery.getSql(), query, QueryType.QUERY, i);
+        }
+    }
 
 }

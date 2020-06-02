@@ -12,7 +12,8 @@ public enum QueryType {
     SELECT_BY_QUERY(8),
     SELECT_BY_ID(9),
     UPDATE_LIST(10),
-    UPDATE(11);
+    UPDATE(11),
+    QUERY(12);
 
     private int value;
 
