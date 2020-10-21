@@ -4,35 +4,29 @@ import android.annotation.SuppressLint;
 
 import androidx.room.TypeConverter;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import bpc.dis.utilities.StringUtilities.StringUtilities;
 
 @SuppressLint("SimpleDateFormat")
 public class TimestampConverter {
 
-    private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-
     @TypeConverter
     public static Date fromTimestamp(String value) {
         if (value != null) {
-            try {
-                return dateFormat.parse(value);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (StringUtilities.isNotNumber(value)) {
+                return new Date(Long.parseLong("1514764800"));
+            } else {
+                return new Date(Long.parseLong(value));
             }
+        } else {
+            return null;
         }
-        return null;
     }
 
     @TypeConverter
-    public static String dateToTimestamp(Date value) {
-        try {
-            return value == null ? null : dateFormat.format(value);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
+    public static String dateToTimestamp(Date date) {
+        return date == null ? null : String.valueOf(date.getTime());
     }
 
 }
