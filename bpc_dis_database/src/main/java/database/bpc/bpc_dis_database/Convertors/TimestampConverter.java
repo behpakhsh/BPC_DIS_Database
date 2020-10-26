@@ -15,7 +15,7 @@ public class TimestampConverter {
     public static Date fromTimestamp(String value) {
         if (value != null) {
             if (StringUtilities.isNotNumber(value)) {
-                return new Date(Long.parseLong("1603710578325"));
+                return new Date(Long.parseLong("1553710578325"));
             } else {
                 return new Date(Long.parseLong(value));
             }
